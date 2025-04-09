@@ -1,4 +1,6 @@
-# Forked - with intent to work with x86 for the evict_reload_histogram demo
+# Forked
+
+I forked the original repo and changed evict_reload_histogram/ to work with x86 architecture. It is a demo on a local memory address.
 
 # Artifacts for A Security RISC
 This repository contains the artifacts for the IEEE S&P 2023 paper ["A Security RISC: Microarchitectural Attacks on Hardware RISC-V CPUs"](https://misc0110.net/files/riscv_attacks_sp23.pdf). 
