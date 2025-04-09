@@ -1,3 +1,10 @@
+# Forked and edited:
+
+run with:
+
+`gcc evict_reload_demo.c -o evict_reload_demo -lssl -lcrypto`
+`./evict_reload_demo`
+
 # Evict+Reload Histogram
 
 Prints a simple Evict+Reload histogram. 

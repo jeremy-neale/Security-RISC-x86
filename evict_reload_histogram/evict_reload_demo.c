@@ -1,8 +1,10 @@
-#include "../rlibsc.h"
+#include "cacheutils.h"
 #include <stdint.h>
 #include <stdio.h>
 #include <string.h>
 #include <unistd.h>
+
+void evict(void *addr);
 
 #define HISTOGRAM_ENTRIES 150
 #define HISTOGRAM_SCALE 1
@@ -41,10 +43,17 @@ static inline void evict(void *addr) {
 }
 #endif
 
+void evict(void *addr) {
+  // Naive eviction: Access many cache lines to evict the target
+  for (int i = 0; i < 4096; i += 64) {
+    maccess((void *)((uintptr_t)addr + i));
+  }
+}
+
 size_t measure_access_time(void *address) {
-  uint64_t x = rdcycle();
+  uint64_t x = rdtsc();
   maccess(address);
-  uint64_t y = rdcycle();
+  uint64_t y = rdtsc();
   return y - x;
 }
 
@@ -63,7 +72,13 @@ void measure_misses(void *address, size_t *histogram,
     evict(address);
     size_t miss = measure_access_time(address);
     if (miss < HISTOGRAM_ENTRIES)
-      histogram[miss]++;
+      histogram[miss]++;size_t measure_access_time(void *address) {
+        uint64_t x = rdtsc();
+        maccess(address);
+        uint64_t y = rdtsc();
+        return y - x;
+      }
+      
   }
 }
 
